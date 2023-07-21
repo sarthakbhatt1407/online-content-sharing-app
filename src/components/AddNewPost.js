@@ -24,7 +24,6 @@ const AddNewPost = () => {
     }
   }, []);
   const defaultFields = {
-    title: "",
     desc: "",
     image: "",
   };
@@ -57,7 +56,6 @@ const AddNewPost = () => {
   const onClickHandler = async () => {
     const form = new FormData();
 
-    form.append("title", inpFields.title);
     form.append("desc", inpFields.desc);
     form.append("image", inpFields.image);
     form.append("creator", userId);
@@ -76,12 +74,6 @@ const AddNewPost = () => {
   };
   return (
     <div>
-      <input
-        type="text"
-        id="title"
-        onChange={onChangeHandler}
-        placeholder="Enter Title"
-      />
       <input
         type="text"
         id="desc"

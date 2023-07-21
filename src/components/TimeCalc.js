@@ -8,6 +8,7 @@ const TimeDiv = styled.div`
 `;
 const TimeCalc = (props) => {
   const date = props.time;
+
   const [time, setTime] = useState(
     moment(`${date}`, "YYYYMMDD h:mm:ss ").fromNow()
   );

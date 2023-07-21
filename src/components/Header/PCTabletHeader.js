@@ -51,7 +51,7 @@ const LoginControls = styled.div`
 const PCTabletHeader = () => {
   const path = useLocation().pathname;
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
-
+  const userId = useSelector((state) => state.userId);
   return (
     <MainBox>
       <NavLink to="/">
@@ -105,10 +105,12 @@ const PCTabletHeader = () => {
               }
             />{" "}
           </NavLink>
-          <NavLink to="/profile">
+          <NavLink to={`/user/profile/${userId}`}>
             <AccountCircleOutlined
               className={
-                path === "/profile" ? "navIcon" + " activeLink" : "navIcon"
+                path === `/user/profile/${userId}`
+                  ? "navIcon" + " activeLink"
+                  : "navIcon"
               }
             />
           </NavLink>

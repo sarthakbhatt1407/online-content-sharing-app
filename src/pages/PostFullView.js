@@ -8,7 +8,7 @@ import {
   ShareOutlined,
   ThumbUpOutlined,
 } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TimeCalc from "../components/TimeCalc";
 import CommentBox from "../components/CommentBox";
 import { EnvVariables } from "../data";
@@ -173,8 +173,17 @@ const PostFullView = () => {
   const [inpfields, setInpFields] = useState(defaultFields);
   const pathname = location.pathname;
   const postId = pathname.split("/")[pathname.split("/").length - 1];
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetcher = async () => {
+      const userResAtStart = await fetch(
+        `${EnvVariables.BASE_URL}/api/user/${userId}`
+      );
+      const userResDataAtStart = await userResAtStart.json();
+      if (!userResAtStart.ok) {
+        dispatch({ type: "logout" });
+        window.location.reload();
+      }
       const res = await fetch(`${EnvVariables.BASE_URL}/api/posts/${postId}`);
       const data = await res.json();
       const likeVerifierRes = await fetch(

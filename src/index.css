@@ -7,6 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #f0f2f5;
 }
+body::-webkit-scrollbar {
+  display: none;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -325,7 +328,7 @@ a {
   margin-bottom: 10px;
   border: none;
   padding: 15px;
-  background-color: #white;
+  background-color: #f0f2f5;
   overflow: hidden;
 }
 
@@ -338,11 +341,11 @@ a {
   left: 0;
   background: linear-gradient(
     110deg,
-    rgba(227, 227, 227, 0) 0%,
+    rgba(255, 253, 253, 0) 0%,
     rgba(227, 227, 227, 0) 40%,
-    rgba(227, 227, 227, 0.5) 50%,
-    rgba(227, 227, 227, 0) 60%,
-    rgba(227, 227, 227, 0) 100%
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(249, 248, 248, 0) 60%,
+    rgba(255, 254, 254, 0) 100%
   );
   animation: gradient-animation_2 1.2s linear infinite;
 }
@@ -408,5 +411,269 @@ a {
 
   100% {
     transform: translateX(100%);
+  }
+}
+
+.heart:active {
+  background-color: transparent;
+}
+
+.activeProfilePageNav {
+  color: #1a6ed8;
+  border-bottom: 1px solid #1a6ed8;
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.blue {
+  background-color: #5fa6ff;
+  width: 100%;
+}
+.red {
+  background-color: #dddddd;
+  width: 100%;
+}
+
+/* chat loader */
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 45px;
+  height: 9px;
+  margin-left: -22px;
+  margin-top: -13px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 9px;
+  height: 9px;
+  background-color: #dcdcdc;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+  animation: bouncedelay 1400ms ease-in-out infinite;
+  /* Prevent first frame from flickering when animation starts */
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes bouncedelay {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+@keyframes bouncedelay {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+#container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  display: -ms-flexbox;
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+  align-items: center;
+  -webkit-align-items: center;
+}
+
+#loading-bubble {
+  display: flex;
+  display: -ms-flexbox;
+  justify-content: center;
+  -webkit-justify-content: center;
+  align-items: center;
+  -webkit-align-items: center;
+  width: auto;
+  height: auto;
+  min-width: 73px;
+  min-height: 40px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  position: relative;
+  background-color: #2e66bd;
+  -webkit-animation: message-bounce 2.5s infinite ease-in-out;
+  animation: message-bounce 2.5s ease-in-out infinite;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+#loading-bubble.grey {
+  background-color: #a5b0b5;
+}
+#loading-bubble.grey:before {
+  border-color: transparent #a5b0b5 transparent transparent;
+}
+#loading-bubble:before {
+  display: block;
+  content: " ";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 8px 8px 0;
+  border-color: transparent #2e66bd transparent transparent;
+  position: absolute;
+  left: -7px;
+  top: 13px;
+}
+#loading-bubble .spinner {
+  position: static !important;
+  margin-top: -11px;
+  margin-left: 0px;
+}
+#loading-bubble .spinner div {
+  background-color: #fff;
+}
+
+@-webkit-keyframes message-bounce {
+  0% {
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+  }
+}
+
+@keyframes message-bounce {
+  0% {
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+  }
+}
+
+/*  */
+.pageLeftNav {
+  transform: scale(1.5);
+}
+
+.classic-1 {
+  --w: 10ch;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1rem;
+  line-height: 2em;
+  letter-spacing: var(--w);
+  width: var(--w);
+  overflow: hidden;
+  white-space: nowrap;
+  color: #0000;
+  text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) 0 #000,
+    calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) 0 #000,
+    calc(-4 * var(--w)) 0 #000, calc(-5 * var(--w)) 0 #000,
+    calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) 0 #000,
+    calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) 0 #000;
+  animation: c1 1s infinite cubic-bezier(0.5, -150, 0.5, 150);
+}
+.classic-1:before {
+  content: "Loading...";
+}
+
+@keyframes c1 {
+  15%,
+  100% {
+    text-shadow: calc(0 * var(--w) + 0.1px) 0 #000,
+      calc(-1 * var(--w)) 0.01em #000, calc(-2 * var(--w) - 0.2px) 0 #000,
+      calc(-3 * var(--w) + 0.1px) 0.01em #000, calc(-4 * var(--w)) -0.01em #000,
+      calc(-5 * var(--w) - 0.1px) 0 #000,
+      calc(-6 * var(--w) - 0.2px) 0.015em #000,
+      calc(-7 * var(--w) - 0.1px) 0.02em #000, calc(-8 * var(--w)) -0.01em #000,
+      calc(-9 * var(--w) + 0.2px) -0.01em #000;
+  }
+}
+
+/* acoount setting */
+
+.settingActive {
+  background-color: rgb(243, 241, 241);
+  border-radius: 0.6rem;
+  color: black;
+  font-weight: 400;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

@@ -13,6 +13,8 @@ import RegisterPage from "./pages/RegisterPage";
 import PasswordReset from "./pages/PasswordReset";
 import { useDispatch, useSelector } from "react-redux";
 import PostFullView from "./pages/PostFullView";
+import UserProfile from "./pages/UserProfile";
+import AccountSetting from "./pages/AccountSetting";
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
@@ -31,6 +33,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<PasswordReset />} />
+        {!isLoggedIn && <Route path="*" element={<LoginPage />} />}
         {isLoggedIn && (
           <>
             <Route path="/" element={<Home />} />
@@ -39,7 +42,13 @@ const App = () => {
             <Route path="/all-friends-posts" element={<FriendsPost />} />
             <Route path="/friends-list" element={<FriendList />} />
             <Route path="/chats" element={<Chats />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/chats/:id" element={<Chats />} />
+            <Route
+              path="/user/profile/:id/settings"
+              element={<AccountSetting />}
+            />
+            <Route path="/user/profile/:id" element={<UserProfile />} />
+
             <Route path="/post/:postId" element={<PostFullView />} />
           </>
         )}

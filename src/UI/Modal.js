@@ -26,7 +26,7 @@ const ModalEle = styled.div`
   border-radius: 0.8rem;
 
   overflow-x: auto;
-  animation: zoomIn 200ms ease-out forwards;
+  animation: fadeIn 1s ease-out forwards;
 
   @media (max-width: 750px) {
     height: 30vh;

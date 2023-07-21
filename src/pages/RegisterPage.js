@@ -221,7 +221,6 @@ const RegisterPage = () => {
       form.append("image", inpFields.image);
       const res = await fetch(`${EnvVariables.BASE_URL}/api/user/signup`, {
         method: "POST",
-
         body: form,
       });
       const data = await res.json();
@@ -318,11 +317,13 @@ const RegisterPage = () => {
             onChange={onChangeHandler}
             value={inpFields.password}
           />
-          {!err && (
+          {!err && !btnLoader && (
             <RegisterBtn onClick={onClickHandler}>
-              {btnLoader && <BtnLoader />}
               {!btnLoader && "Register"}
             </RegisterBtn>
+          )}
+          {!err && btnLoader && (
+            <RegisterBtn disabled>{btnLoader && <BtnLoader />}</RegisterBtn>
           )}
           {err && <ErrorBtn>{errText}</ErrorBtn>}
           <Link to="/login">

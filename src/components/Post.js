@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Loader from "./Loader";
 import { Link, useNavigate } from "react-router-dom";
-import Heart from "react-animated-heart";
+
 import TimeCalc from "./TimeCalc";
 import { useSelector } from "react-redux";
+import Heart from "react-heart";
 import {
   ModeCommentOutlined,
   ShareOutlined,
@@ -39,13 +40,14 @@ const ShareBox = styled.div`
 const MainBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 1.2rem 0;
+  margin: 0.5rem 0 1.2rem 0;
   border-radius: 1rem;
   background-color: white;
   box-shadow: 0.1rem 0.1rem 0.6rem #a99d9d;
   padding-bottom: 0.5rem;
-  @media (max-width: 670px) {
-    margin: 0.3rem;
+  position: relative;
+  @media (max-width: 750px) {
+    margin: 0.3rem 0;
     border-radius: 0;
     padding: 0 0 0.5rem 0;
   }
@@ -78,14 +80,15 @@ const ProfileTextBox = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
 `;
-const HeartBox = styled.div`
-  display: flex;
-  justify-content: end;
-  margin-top: -1.5rem;
-  margin-right: -1.5rem;
+const HeartBox = styled.button`
+  width: 2.5rem;
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 1.5%;
+  right: 2%;
   @media (max-width: 670px) {
-    transform: scale(0.8);
-    margin-right: -2.4rem;
+    width: 2.2rem;
   }
 `;
 
@@ -106,7 +109,7 @@ const ProfileBox = styled.div`
       height: 3rem;
     margin-right: 0.2rem;}
   }
-  @media (max-width: 670px) {
+  @media (max-width: 750px) {
     padding: 0.4rem 0.5rem 0rem 0.4rem;
     
 }
@@ -175,7 +178,8 @@ const HiddenSpan = styled.span`
 `;
 const Post = (props) => {
   const userId = useSelector((state) => state.userId);
-  const [isClick, setClick] = useState(false);
+  // const [active, setActive] = useState(false);
+  const [active, setActive] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { category, comments, creator, desc, id, image, likes, title, time } =
     props.post;
@@ -193,7 +197,8 @@ const Post = (props) => {
         `${EnvVariables.BASE_URL}/api/posts/${id}/${userId}/favorite/check`
       );
       const likedResData = await likedRes.json();
-      setClick(likedResData.postFound);
+      setActive(likedResData.postFound);
+
       setUserData(data);
       const likeVerifierRes = await fetch(
         `${EnvVariables.BASE_URL}/api/posts/${id}/likes/${userId}`
@@ -223,7 +228,7 @@ const Post = (props) => {
   const favoriteBtnHandler = async () => {
     let res;
     let data;
-    if (!isClick) {
+    if (!active) {
       res = await fetch(
         `${EnvVariables.BASE_URL}/api/posts/${id}/favorite/add`,
         {
@@ -248,7 +253,8 @@ const Post = (props) => {
     }
     data = await res.json();
     console.log(data);
-    setClick(!isClick);
+    setActive(!active);
+    setActive(!active);
   };
 
   const likeBtnHandler = async () => {
@@ -285,6 +291,7 @@ const Post = (props) => {
   const onclickRedirect = () => {
     navigate(`/post/${id}`);
   };
+
   return (
     <>
       {isLoading && <Loader />}
@@ -326,11 +333,17 @@ const Post = (props) => {
               <img src={`${EnvVariables.BASE_URL}/${userData.image}`} alt="" />
               <ProfileTextBox>
                 <TimeNameDiv>
-                  <Link to="/">{userData.name}</Link>
+                  <Link to={`/user/profile/${userData.userId}`}>
+                    {userData.name}
+                  </Link>
                   <TimeCalc time={time} />
                 </TimeNameDiv>
-                <HeartBox>
-                  <Heart isClick={isClick} onClick={favoriteBtnHandler} />
+                <HeartBox className="heart">
+                  <Heart
+                    activeColor="#1a6ed8"
+                    isActive={active}
+                    onClick={favoriteBtnHandler}
+                  />
                 </HeartBox>
               </ProfileTextBox>
             </ProfileBox>

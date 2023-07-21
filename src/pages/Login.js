@@ -183,11 +183,13 @@ const LoginPage = () => {
             onChange={onChangeHandler}
             value={inpFields.password}
           />
-          {!err && (
+          {!err && !sendingReq && (
             <LoginBtn onClick={onClickHandler}>
-              {sendingReq && <BtnLoader />}
               {!sendingReq && "Login"}
             </LoginBtn>
+          )}
+          {!err && sendingReq && (
+            <LoginBtn disabled>{sendingReq && <BtnLoader />}</LoginBtn>
           )}
           {err && <ErrorBtn>{errText}</ErrorBtn>}
           <Link to="/register">

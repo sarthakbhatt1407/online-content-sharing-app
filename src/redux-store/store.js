@@ -5,6 +5,7 @@ const defaultState = {
   userEmail: "",
   userImage: "",
   userId: "",
+  userName: "",
 };
 const storeReducer = (state = defaultState, action) => {
   if (action.type === "login") {
@@ -18,6 +19,7 @@ const storeReducer = (state = defaultState, action) => {
       userToken: data.token,
       userEmail: user.email,
       userImage: user.image,
+      userName: user.name,
     };
   }
   if (action.type === "logout") {

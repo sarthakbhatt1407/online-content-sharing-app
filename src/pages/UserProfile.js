@@ -20,46 +20,41 @@ const ProfileInfoBox = styled.div`
   }
 `;
 
-const Profile = () => {
+const UserProfile = () => {
   const dispatch = useDispatch();
   const userId = useParams().id;
   const [userData, setUserData] = useState(null);
   const id = useSelector((state) => state.userId);
   useEffect(() => {
-    const userDataLocal = JSON.parse(localStorage.getItem("userData"));
-    if (userDataLocal) {
-      dispatch({ type: "login", data: { ...userDataLocal } });
-      const userData = JSON.parse(localStorage.getItem("userData"));
-      if (userData) {
-        dispatch({ type: "login", data: { ...userData } });
-      }
-      const fetcher = async () => {
-        const userResAtStart = await fetch(
-          `${EnvVariables.BASE_URL}/api/user/${id}`
-        );
-        const userResDataAtStart = await userResAtStart.json();
-        if (!userResAtStart.ok) {
-          dispatch({ type: "logout" });
-          window.location.reload();
-        }
-        const res = await fetch(`${EnvVariables.BASE_URL}/api/user/${userId}`);
-        const data = await res.json();
-        console.log(data);
-        if (res.ok) {
-          setUserData(data);
-        }
-      };
-      fetcher();
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData) {
+      dispatch({ type: "login", data: { ...userData } });
     }
+    const fetcher = async () => {
+      const userResAtStart = await fetch(
+        `${EnvVariables.BASE_URL}/api/user/${id}`
+      );
+      const userResDataAtStart = await userResAtStart.json();
+      if (!userResAtStart.ok) {
+        dispatch({ type: "logout" });
+        window.location.reload();
+      }
+      const res = await fetch(`${EnvVariables.BASE_URL}/api/user/${userId}`);
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        setUserData(data);
+      }
+    };
+    fetcher();
   }, []);
-
   return (
     <MainBox>
       {!userData && <FullPageLoader />}
       {userData && (
         <>
           <ProfileInfoBox>
-            <ProfileInfo user={userData} setting={true} />
+            <ProfileInfo user={userData} />
           </ProfileInfoBox>
           <UserFreindsAndPost user={userData} />
         </>
@@ -68,4 +63,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UserProfile;

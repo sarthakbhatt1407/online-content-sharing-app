@@ -1,44 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled, { keyframes } from "styled-components";
-import "animate.css";
-import register from "../assets/images/register.svg";
+import styled from "styled-components";
 import { EnvVariables } from "../data";
-const OuterBox = styled.div`
-  height: 100vh;
-  position: relative;
-  background-image: url(${(props) => props.img});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  @media (max-width: 750px) {
-    background-size: cover;
-  }
-`;
-const MainBox = styled.div`
-  display: flex;
-
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 80vh;
-  @media (max-width: 450px) {
-    height: 80vh;
-  }
-  @media only screen and (min-width: 451px) and (max-width: 599px) {
-  }
-`;
 
 const ResetFormBox = styled.div`
-  height: 40vh;
-  width: 40vw;
+  height: 32vh;
+  width: 80%;
   display: flex;
   z-index: 2;
   background-color: white;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0.1rem 0.2rem 0.5rem #a5a5a5;
   gap: 1rem;
   @media (max-width: 650px) {
     width: 90vw;
@@ -81,18 +53,12 @@ const ResetButton = styled.button`
   animation: fadeIn 2s;
 `;
 const SubmitButton = styled.button`
-  animation: fadeIn 2s;
+  animation: fadeIn 1s;
 `;
-
-const SecurityPage = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const localStr = JSON.parse(localStorage.getItem("state"));
-    if (localStr) {
-      dispatch({ type: "reload", item: { ...localStr } });
-    }
-  }, []);
+const SettingPasswordReset = () => {
   const email = useSelector((state) => state.userEmail);
+  const [invalidEmail, setInvalidEmail] = useState(false);
+
   const demoEmail = email.split("@")[0];
   const len = demoEmail.length;
   let finalDemoEmail = "";
@@ -109,6 +75,11 @@ const SecurityPage = () => {
   const [inpFields, SetInpFields] = useState(defaultFields);
 
   const emailSubmitter = async () => {
+    if (!(email === inpFields.email)) {
+      setInvalidEmail(true);
+      console.log("wrong");
+      return;
+    }
     const res = await fetch(
       `${EnvVariables.BASE_URL}/api/user/forgot-password/email-verifier`,
       {
@@ -128,6 +99,7 @@ const SecurityPage = () => {
       setEmailIsValid(true);
     }
   };
+  const dispatch = useDispatch();
   const resetHandler = async () => {
     const res = await fetch(
       `${EnvVariables.BASE_URL}/api/user/forgot-password/reset-password`,
@@ -141,46 +113,52 @@ const SecurityPage = () => {
     );
     const data = await res.json();
     console.log(data);
+    if (res.ok) {
+      dispatch({ type: "logout" });
+    }
   };
   const onChangeHandler = (e) => {
+    setInvalidEmail(false);
     const val = e.target.value;
     const id = e.target.id;
     SetInpFields({ ...inpFields, [id]: val });
   };
   return (
-    <OuterBox img={register}>
-      <MainBox>
-        <ResetFormBox>
-          <h3>Reset Your Password</h3>
-          {!emailIsValid && <p>Kindly verify yor email : {finalDemoEmail}</p>}
-          {!emailIsValid && (
-            <EmailInput
-              type="email"
-              placeholder="Enter Your Email"
-              id="email"
-              onChange={onChangeHandler}
-            />
-          )}
-          {!emailIsValid && (
-            <SubmitButton id="submit" onClick={emailSubmitter}>
-              Submit
-            </SubmitButton>
-          )}
-          {emailIsValid && (
-            <PasswordInput
-              type="password"
-              placeholder="Enter New Password"
-              id="password"
-              onChange={onChangeHandler}
-            />
-          )}
-          {emailIsValid && (
-            <ResetButton onClick={resetHandler}>Reset</ResetButton>
-          )}
-        </ResetFormBox>
-      </MainBox>
-    </OuterBox>
+    <ResetFormBox>
+      {!emailIsValid && <p>Kindly verify yor email </p>}
+      {!emailIsValid && (
+        <EmailInput
+          type="email"
+          placeholder="Enter Your Email"
+          id="email"
+          onChange={onChangeHandler}
+        />
+      )}
+      {!emailIsValid && !invalidEmail && (
+        <SubmitButton id="submit" onClick={emailSubmitter}>
+          Submit
+        </SubmitButton>
+      )}
+      {invalidEmail && (
+        <SubmitButton
+          style={{ backgroundColor: "#e1e1e1" }}
+          id="submit"
+          disabled
+        >
+          Invalid Email
+        </SubmitButton>
+      )}
+      {emailIsValid && (
+        <PasswordInput
+          type="password"
+          placeholder="Enter New Password"
+          id="password"
+          onChange={onChangeHandler}
+        />
+      )}
+      {emailIsValid && <ResetButton onClick={resetHandler}>Reset</ResetButton>}
+    </ResetFormBox>
   );
 };
 
-export default SecurityPage;
+export default SettingPasswordReset;

@@ -49,7 +49,7 @@ const Logo = styled.img`
 const MobileHeader = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const path = useLocation().pathname;
-
+  const userId = useSelector((state) => state.userId);
   return (
     <MainBox>
       <TopBox>
@@ -75,10 +75,10 @@ const MobileHeader = () => {
                 }
               />{" "}
             </NavLink>
-            <NavLink to="/profile">
+            <NavLink to={`/user/profile/${userId}`}>
               <AccountCircleOutlined
                 className={
-                  path === "/profile" ? "navIcon" + " activeLink" : "navIcon"
+                  path === "/profile/" ? "navIcon" + " activeLink" : "navIcon"
                 }
               />
             </NavLink>
