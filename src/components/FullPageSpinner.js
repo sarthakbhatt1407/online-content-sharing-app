@@ -13,6 +13,7 @@ const MainBox = styled.div`
   transform: translate(-50%, -50%);
   background-color: black;
   opacity: 0.2;
+  z-index: 10;
 `;
 
 const FullPageSpinner = () => {
