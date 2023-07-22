@@ -75,7 +75,7 @@ const AddNewButton = styled.div`
     }
   }
   @media (max-width: 750px) {
-    bottom: 3%;
+    bottom: 10%;
   }
 `;
 const App = () => {
