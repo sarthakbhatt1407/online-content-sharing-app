@@ -88,6 +88,12 @@ const AllUsersBox = () => {
       setLoading(false);
     };
     fetcher();
+    const likeInt = setInterval(async () => {
+      fetcher();
+    }, 2000);
+    return () => {
+      clearInterval(likeInt);
+    };
   }, []);
   const onChangeHandler = (e) => {
     const val = e.target.value.toLowerCase();

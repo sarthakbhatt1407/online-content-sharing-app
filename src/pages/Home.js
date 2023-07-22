@@ -76,7 +76,6 @@ const Home = () => {
         window.location.reload();
       }
 
-      console.log(userData);
       const res = await fetch(`${EnvVariables.BASE_URL}/api/posts/`);
       const data = await res.json();
 

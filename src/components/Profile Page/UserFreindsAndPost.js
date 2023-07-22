@@ -14,6 +14,7 @@ const MainBox = styled.div`
   @media (max-width: 750px) {
     flex-direction: column;
     padding: 0 0.4rem;
+    height: 61vh;
   }
 `;
 const FriendListBox = styled.div`
@@ -80,7 +81,7 @@ const PostBox = styled.div`
     width: 100%;
     margin-top: -0.5rem;
     /* height: auto; */
-    overflow: visible;
+    overflow: scroll;
   }
 `;
 const NoPostDiv = styled.div`

@@ -7,7 +7,7 @@ const MainBox = styled.div`
   height: 40vh;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: center;
   justify-content: center;
   input {
@@ -27,6 +27,14 @@ const MainBox = styled.div`
       padding: 0.3rem 1rem;
       font-size: 1rem;
       border-radius: 0.6rem;
+    }
+  }
+  @media (max-width: 750px) {
+    height: 30vh;
+    overflow: scroll;
+    gap: 1rem;
+    input {
+      width: 50%;
     }
   }
 `;
@@ -84,6 +92,28 @@ const AddNewPost = (props) => {
     setInputFields(obj);
   };
   const onClickHandler = async () => {
+    if (inpFields.desc.length < 1 && !img) {
+      const desc = document.getElementById("desc");
+      desc.style.border = " 1px solid red";
+      const image = document.getElementById("image");
+      image.style.border = " 1px solid red";
+      return;
+    }
+    if (inpFields.desc.length < 1) {
+      const desc = document.getElementById("desc");
+      desc.style.border = " 1px solid red";
+
+      return;
+    }
+    if (!img) {
+      const image = document.getElementById("image");
+      image.style.border = " 1px solid red";
+      return;
+    }
+
+    props.onClick();
+    props.loadingHnd();
+
     const form = new FormData();
 
     form.append("desc", inpFields.desc);
@@ -94,7 +124,10 @@ const AddNewPost = (props) => {
       body: form,
     });
     const data = await res.json();
-    console.log(data);
+
+    if (res.ok) {
+      props.loadingHnd(true);
+    }
     if (!res.ok) {
     } else {
       setInputFields(defaultFields);
@@ -108,7 +141,7 @@ const AddNewPost = (props) => {
         type="text"
         id="desc"
         onChange={onChangeHandler}
-        placeholder="Enter Message"
+        placeholder="Write Message...."
       />
       <input
         type="file"

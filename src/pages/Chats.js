@@ -13,6 +13,7 @@ import LoadingTextLoader from "../components/LoadingTextLoader";
 const MainBox = styled.div`
   display: flex;
   flex-direction: column;
+  z-index: 20;
 `;
 
 const LowerBox = styled.div`
@@ -58,6 +59,7 @@ const ProfileBox = styled.div`
 const ChatsBox = styled.div`
   height: 80.8vh;
   animation: fadeIn 1s;
+  z-index: 20;
   @media (max-width: 750px) {
   }
 `;

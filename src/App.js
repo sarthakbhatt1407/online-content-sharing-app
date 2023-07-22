@@ -18,13 +18,21 @@ import AccountSetting from "./pages/AccountSetting";
 import styled, { keyframes } from "styled-components";
 import Modal from "./UI/Modal";
 import AddNewPost from "./components/AddNewPost";
+import FullPageSpinner from "./components/FullPageSpinner";
 
-const MainBox = styled.div`
-  position: relative;
-`;
+const MainBox = styled.div``;
 
 const BtnAni = keyframes`
 0%{opacity:0}
+100%{
+  opacity: 1;
+}
+`;
+const BtnAniStart = keyframes`
+0%{opacity:0}
+99%{
+  opacity: 0;
+}
 100%{
   opacity: 1;
 }
@@ -39,11 +47,13 @@ const AddNewButton = styled.div`
   justify-content: center;
   width: 3.2rem;
   height: 3.2rem;
-  bottom: 5%;
-  right: 5%;
+  bottom: 4%;
+  right: 3%;
   color: white;
   transition: all 0.3s;
+  animation: ${BtnAniStart} 4s;
   z-index: 10;
+  cursor: pointer;
   p {
     display: inline;
     margin-bottom: 1.3rem;
@@ -65,12 +75,13 @@ const AddNewButton = styled.div`
     }
   }
   @media (max-width: 750px) {
-    bottom: 7%;
+    bottom: 3%;
   }
 `;
 const App = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
@@ -81,43 +92,53 @@ const App = () => {
   const modalHandler = () => {
     setShowModal(!showModal);
   };
+  const loadingHandler = (state) => {
+    if (state) {
+      setLoading(false);
+    } else setLoading(true);
+  };
   return (
-    <MainBox>
+    <>
+      {" "}
       <AddNewButton onClick={modalHandler}>
         <p>+</p>
         <span>Add New Post</span>
       </AddNewButton>
-      {showModal && (
-        <Modal onClick={modalHandler}>
-          <AddNewPost onClick={modalHandler} />
-        </Modal>
-      )}
-      <MainHeader />
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<PasswordReset />} />
-        {!isLoggedIn && <Route path="*" element={<LoginPage />} />}
-        {isLoggedIn && (
-          <>
-            <Route path="/" element={<Home />} />
-            <Route path="/your-posts" element={<YourPost />} />
-            <Route path="/liked-post" element={<LikedPost />} />
-            <Route path="/all-friends-posts" element={<FriendsPost />} />
-            <Route path="/friends-list" element={<FriendList />} />
-            <Route path="/chats" element={<Chats />} />
-            <Route path="/chats/:id" element={<Chats />} />
-            <Route
-              path="/user/profile/:id/settings"
-              element={<AccountSetting />}
-            />
-            <Route path="/user/profile/:id" element={<UserProfile />} />
+      <MainBox>
+        {loading && <FullPageSpinner />}
 
-            <Route path="/post/:postId" element={<PostFullView />} />
-          </>
+        {showModal && (
+          <Modal onClick={modalHandler}>
+            <AddNewPost onClick={modalHandler} loadingHnd={loadingHandler} />
+          </Modal>
         )}
-      </Routes>
-    </MainBox>
+        <MainHeader />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<PasswordReset />} />
+          {!isLoggedIn && <Route path="*" element={<LoginPage />} />}
+          {isLoggedIn && (
+            <>
+              <Route path="/" element={<Home />} />
+              <Route path="/your-posts" element={<YourPost />} />
+              <Route path="/liked-post" element={<LikedPost />} />
+              <Route path="/all-friends-posts" element={<FriendsPost />} />
+              <Route path="/friends-list" element={<FriendList />} />
+              <Route path="/chats" element={<Chats />} />
+              <Route path="/chats/:id" element={<Chats />} />
+              <Route
+                path="/user/profile/:id/settings"
+                element={<AccountSetting />}
+              />
+              <Route path="/user/profile/:id" element={<UserProfile />} />
+
+              <Route path="/post/:postId" element={<PostFullView />} />
+            </>
+          )}
+        </Routes>
+      </MainBox>
+    </>
   );
 };
 

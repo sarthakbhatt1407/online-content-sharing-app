@@ -13,6 +13,10 @@ import TimeCalc from "../components/TimeCalc";
 import CommentBox from "../components/CommentBox";
 import { EnvVariables } from "../data";
 import FullPageLoader from "../components/FullPageLoader";
+import FullPageSpinner from "../components/FullPageSpinner";
+const OuterBox = styled.div`
+  height: 90vh;
+`;
 
 const MainBox = styled.div`
   display: grid;
@@ -37,7 +41,7 @@ const PostBox = styled.div`
   }
   }
   }
-  @media (max-width: 670px) {
+  @media (max-width: 750px) {
     height: auto;
     margin-bottom:1rem;
   }
@@ -64,7 +68,14 @@ const ProfileDiv = styled.div`
   display: flex;
   align-items: center;
 `;
-const ProfileDivTextBox = styled.div``;
+const ProfileDivTextBox = styled.div`
+  a {
+    color: black;
+    text-transform: capitalize;
+
+    font-size: 1.1rem;
+  }
+`;
 
 const LikesCmtBox = styled.div`
   height: 8vh;
@@ -315,7 +326,8 @@ const PostFullView = () => {
   };
 
   return (
-    <>
+    <OuterBox>
+      {!userData && <FullPageSpinner />}
       {userData && (
         <MainBox>
           <PostBox>
@@ -331,7 +343,9 @@ const PostFullView = () => {
                     alt=""
                   />
                   <ProfileDivTextBox>
-                    <Link to="/">{userData.name}</Link>
+                    <Link to={`/user/profile/${userData.userId}`}>
+                      {userData.name}
+                    </Link>
                     <TimeCalc time={post.time} />
                   </ProfileDivTextBox>
                 </ProfileDiv>
@@ -409,7 +423,7 @@ const PostFullView = () => {
           </CommentsBox>
         </MainBox>
       )}
-    </>
+    </OuterBox>
   );
 };
 
