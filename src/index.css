@@ -8,6 +8,7 @@ body {
   background-color: #f0f2f5;
   position: relative;
   height: 100vh;
+  word-wrap: break-word;
 }
 body::-webkit-scrollbar {
   display: none;

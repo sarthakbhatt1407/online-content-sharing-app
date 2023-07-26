@@ -70,7 +70,6 @@ const YourPost = () => {
       const userResAtStart = await fetch(
         `${EnvVariables.BASE_URL}/api/user/${userId}`
       );
-      const userResDataAtStart = await userResAtStart.json();
       if (!userResAtStart.ok) {
         dispatch({ type: "logout" });
         window.location.reload();
@@ -84,6 +83,7 @@ const YourPost = () => {
         if (post.creator === userId) {
           return arr.unshift(post);
         }
+        return post;
       });
       setPosts(arr);
       setTimeout(() => {

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import MainHeader from "./components/Header/MainHeader";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import YourPost from "./pages/YourPost";
 import LikedPost from "./pages/LikedPost";
 import FriendsPost from "./pages/FriendsPost";
 import FriendList from "./pages/FriendList";
 import Chats from "./pages/Chats";
-import Profile from "./pages/Profile";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/RegisterPage";
 import PasswordReset from "./pages/PasswordReset";
@@ -79,6 +78,8 @@ const AddNewButton = styled.div`
   }
 `;
 const App = () => {
+  const location = useLocation().pathname;
+  const path = location.split("/")[1];
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -100,10 +101,12 @@ const App = () => {
   return (
     <>
       {" "}
-      <AddNewButton onClick={modalHandler}>
-        <p>+</p>
-        <span>Add New Post</span>
-      </AddNewButton>
+      {!(path === "chats") && (
+        <AddNewButton onClick={modalHandler}>
+          <p>+</p>
+          <span>Add New Post</span>
+        </AddNewButton>
+      )}
       <MainBox>
         {loading && <FullPageSpinner />}
 

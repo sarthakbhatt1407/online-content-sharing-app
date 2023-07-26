@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import register from "../assets/images/register.svg";
 import "animate.css";
@@ -82,7 +82,6 @@ const ImgDiv = styled.div`
   background-position: center;
 `;
 const FileInput = styled.input`
-  /* margin: -2.2rem 0 -0.5rem 0; */
   padding: 0.6rem 2rem;
   border: 1px solid #e8e8e8;
   border-radius: 0.3rem;
@@ -159,7 +158,6 @@ const ModalPara = styled.p`
 `;
 
 const RegisterPage = () => {
-  const [sendingReq, setSendingReq] = useState(false);
   const [err, setErr] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [btnLoader, setBtnLoader] = useState(false);

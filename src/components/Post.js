@@ -53,6 +53,7 @@ const MainBox = styled.div`
   }
 `;
 const DecBox = styled.div`
+  word-wrap: break-word;
   padding: 0.4rem 1rem 0.4rem 2rem;
   @media (max-width: 670px) {
     padding: 0.2rem 0.5rem 0.5rem 1rem;

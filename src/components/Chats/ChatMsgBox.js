@@ -11,6 +11,7 @@ import ChatLoader from "../ChatLoader";
 const MainBox = styled.div`
   display: flex;
   flex-direction: column;
+  z-index: 100;
 `;
 
 const ProfileBoxDiv = styled.div`
@@ -39,6 +40,7 @@ const MsgBoxDiv = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 0.5rem;
+  z-index: 100;
   &::before {
     content: "";
     position: absolute;
@@ -69,10 +71,13 @@ const MsgBox = styled.div`
 `;
 const MsgAndHiddenDivBox = styled.div`
   display: flex;
+  /* background-color: green; */
+  width: 100%;
+  justify-content: space-between;
 `;
 const HiddenDiv = styled.div`
   visibility: hidden;
-  width: 85%;
+  width: 80%;
 `;
 const MsgMainBox = styled.div`
   width: 15%;
@@ -81,9 +86,8 @@ const MsgMainBox = styled.div`
 `;
 const MsgDiv = styled.div`
   padding: 0.2rem 1rem 0.2rem 0.4rem;
-  width: fit-content;
-  display: flex;
-  justify-content: start;
+  word-wrap: break-word;
+
   border-radius: 0.5rem;
 `;
 const MsgSenderBox = styled.div`
