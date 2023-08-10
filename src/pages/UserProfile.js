@@ -34,7 +34,6 @@ const UserProfile = () => {
       const userResAtStart = await fetch(
         `${EnvVariables.BASE_URL}/api/user/${id}`
       );
-      const userResDataAtStart = await userResAtStart.json();
       if (!userResAtStart.ok) {
         dispatch({ type: "logout" });
         window.location.reload();

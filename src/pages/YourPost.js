@@ -120,9 +120,6 @@ const YourPost = () => {
         <AllUsersBox />
         <YourFriendsBox refresh={false} user={userId} />
       </RightBox>
-      <div>
-        <AddNewPost />
-      </div>
     </MainBox>
   );
 };
